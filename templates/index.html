@@ -1,0 +1,123 @@
+<html>
+<head>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+</head>
+<h2>QA-search dataset human success rate survey</h2>
+<div id="app">
+  <div v-if="state==='intro'">
+    <p>Some explanation here.</p>
+    <p>Please input a valid email address so that we can inform you about the results of our research.</p>
+    <form v-on:submit.prevent="startSurvey()">
+      <label>email: </label><input type="email" v-model="email"></input>
+      <input type="submit" value="Start Survey">
+    </form>
+  </div>
+
+  <div v-if="state==='survey'">
+    <button v-on:click="submitAnswer()">Submit</button>
+    <div>question: <span>[[question]]<span></div>
+    <div>answer: <span>[[response]]<span></div>
+    <div v-if="debugMode" style='outline: 1px solid'>
+      <div>correct answer: <span>[[answer]]<span></div>
+      <div>is correct?: [[correct]]</div>
+      <div>qaNo: [[qaNo]]</div>
+      <div>[[responses]]</div>
+    </div>
+    <div>snippets:</div>
+    <ul v-for="snippet in snippets">
+      <li><span v-for="word of snippet.split(' ')"><a href="#" v-on:click="setResponse(word)">[[word]]</a>&nbsp;</span></li>
+    </ul>
+  </div>
+
+  <div v-if="state==='submitting'">
+    Submitting your answer...
+  </div>
+
+  <div v-if="state==='submitted'">
+    <button v-on:click="getNextQuestion()">Next Question</button>
+    <div>question: <span>[[question]]<span></div>
+    <div>correct answer: <span>[[answer]]<span></div>
+    <div>your answer: <span>[[response]]<span></div>
+    <div>[[numCorrect]] correct answers out of [[responses.length]] questions.</div>
+  </div>
+</div>
+
+<script>
+Vue.config.delimiters = ['[[', ']]'];
+var app = new Vue({
+  el: '#app',
+  delimiters: ['[[', ']]'],
+  data: {
+    state: 'intro',
+    email: document.location.search.includes('debug') ? 'debug@mode' : '',
+    debugMode: document.location.search.includes('debug'),
+    snippets: [],
+    question: '',
+    answer: '',
+    response: '',
+    responses: [],
+    qaNo: null
+  },
+  computed: {
+    correct: function() {
+      return this.answer === this.response;
+    },
+    numCorrect: function() {
+      return this.responses.reduce((tot, curr) => tot + (curr ? 1 : 0), 0);
+    }
+  },
+  methods: {
+    startSurvey: function() {
+      this.state = 'survey';
+      this.loadRandomQuestion();
+    },
+    submitAnswer: function() {
+      this.state = 'submitting';
+      this.saveResponse();
+      this.postAnswer();
+    },
+    getNextQuestion: function() {
+      this.state = 'survey';
+      this.loadRandomQuestion();
+    },
+    loadRandomQuestion: function() {
+      this.qaNo = Math.floor(Math.random() * 13389);
+      q = this.pullQuestion(this.qaNo);
+      this.response = '';
+    },
+    pullQuestion: function(n) {
+      this.$http.get('/questions/'+ n).then((response) => {
+        return response.json();
+      }).then((qa) => {
+        this.question = qa.question;
+        this.snippets = qa.snippets;
+        this.answer = qa.answer;
+      });
+    },
+    setResponse: function(word) {
+      this.response = word;
+    },
+    saveResponse: function() {
+      this.responses.push(this.correct);
+    },
+    postAnswer: function() {
+      var data = {
+        email: this.email,
+        correct: this.correct,
+        question_no: this.qaNo,
+        answer: this.response
+      };
+      console.log('sending: ', data);
+      this.$http.post('/answers', data).then((response) => {
+        console.log(response.status, response.body);
+        this.state = 'submitted';
+      }, (response) => {
+        console.log('ERROR', response.body);
+        this.state = 'submitted';
+      });
+    }
+  }
+});
+</script>
+</html>
