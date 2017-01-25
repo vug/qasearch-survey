@@ -6,7 +6,6 @@
 <h2>QA-search dataset human success rate survey</h2>
 <div id="app">
   <div v-if="state==='intro'">
-    <p>Some explanation here.</p>
     <p>Please input a valid email address so that we can inform you about the results of our research.</p>
     <form v-on:submit.prevent="checkRegistered()">
       <label>email: </label><input type="email" v-model="email">
