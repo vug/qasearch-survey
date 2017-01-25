@@ -16,6 +16,7 @@
   </div>
 
   <div v-if="state==='survey'">
+    <div><label>timer:</label> [[timeLeftStr]]</div>
     <button v-on:click="submitAnswer()">Submit</button>
     <div>question: <span>[[question]]</span></div>
     <div>answer: <span>[[response]]</span></div>
