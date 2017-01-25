@@ -54,7 +54,7 @@ def login():
     email = req['email']
     p = get_participant(email)
     if p is None:
-        return '{} has not been registered', 401
+        return '{} has not been registered'.format(email), 401
     return 'OK', 200
 
 
