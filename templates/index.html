@@ -8,7 +8,7 @@
   <div v-if="state==='intro'">
     <p>Some explanation here.</p>
     <p>Please input a valid email address so that we can inform you about the results of our research.</p>
-    <form v-on:submit.prevent="startSurvey()">
+    <form v-on:submit.prevent="checkRegistered()">
       <label>email: </label><input type="email" v-model="email">
       <input type="submit" value="Start Survey"><br>
       <div>[[loginError]]</div>
@@ -70,6 +70,15 @@ var app = new Vue({
     }
   },
   methods: {
+    checkRegistered: function() {
+      console.log('are your registered?');
+      this.$http.post('/login', {email: this.email}).then((response) => {
+        console.log(response.status, response.body);
+        this.startSurvey();
+      }, (response) => {
+        this.loginError = response.body;
+      });
+    },
     startSurvey: function() {
       this.state = 'survey';
       this.loadRandomQuestion();
