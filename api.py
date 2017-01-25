@@ -60,6 +60,9 @@ def login():
 
 @app.route('/questions/<int:qa_id>')
 def questions(qa_id):
+    auth = request.headers.get('Authorization')
+    if auth is None or get_participant(auth) is None:
+        return 'Not authorized', 401
     with app.open_resource('static/survey-data/{}.json'.format(qa_id), 'r') as f:
         contents = json.load(f)
     return json.dumps(contents)
