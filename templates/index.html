@@ -132,6 +132,13 @@ var app = new Vue({
         console.log('ERROR', response.body);
         this.state = 'submitted';
       });
+    },
+    countDown: function() {
+      var t = new Date().getTime();
+      var secondsLeft = (this.endTime - t) / 1000.0;
+      var min = Math.floor(secondsLeft / 60.0);
+      var sec = Math.floor(secondsLeft - 60 * min);
+      this.timeLeftStr = +min + ':' + sec;
     }
   }
 });
