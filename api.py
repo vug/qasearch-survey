@@ -81,6 +81,11 @@ def get_all_answers():
     return jsonify(answer_dicts), 200
 
 
+def get_participant(email):
+    """Query DB for participant of given email."""
+    return Participant.query.filter_by(email=email).first()
+
+
 @app.cli.command('init_db')
 def init_db_command():
     """Initialize the database."""
