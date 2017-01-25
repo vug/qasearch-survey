@@ -98,7 +98,8 @@ var app = new Vue({
       this.response = '';
     },
     pullQuestion: function(n) {
-      this.$http.get('/questions/'+ n).then((response) => {
+      var options = {headers: {'Authorization': this.email}};
+      this.$http.get('/questions/'+ n, options).then((response) => {
         return response.json();
       }).then((qa) => {
         this.question = qa.question;
