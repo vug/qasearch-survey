@@ -14,6 +14,9 @@ class Participant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Unicode)
 
+    def __init__(self, email):
+        self.email = email
+
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
