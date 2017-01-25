@@ -10,6 +10,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = flask_sqlalchemy.SQLAlchemy(app)
 
 
+class Participant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.Unicode)
+
+
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Unicode)
