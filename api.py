@@ -88,5 +88,17 @@ def init_db_command():
     db.create_all()
 
 
+@app.cli.command('test_data')
+def test_data_command():
+    """Insert test data into DB.
+
+    Two student emails.
+    """
+    print('inserting example data...')
+    db.session.add(Participant('student1@nyu.edu'))
+    db.session.add(Participant('student2@nyu.edu'))
+    db.session.commit()
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=7000)
