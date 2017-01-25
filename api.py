@@ -81,6 +81,12 @@ def get_all_answers():
     return jsonify(answer_dicts), 200
 
 
-if __name__ == '__main__':
+@app.cli.command('init_db')
+def init_db_command():
+    """Initialize the database."""
+    print('initializing database...')
     db.create_all()
+
+
+if __name__ == '__main__':
     app.run(debug=True, port=7000)
