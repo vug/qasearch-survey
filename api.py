@@ -104,6 +104,7 @@ def get_participant(email):
 def init_db_command():
     """Initialize the database."""
     print('initializing database...')
+    db.init_app(app)
     db.create_all()
 
 
@@ -114,6 +115,7 @@ def test_data_command():
     Two student emails.
     """
     print('inserting example data...')
+    db.init_app(app)
     db.session.add(Participant('student1@nyu.edu'))
     db.session.add(Participant('student2@nyu.edu'))
     db.session.commit()
