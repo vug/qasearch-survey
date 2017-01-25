@@ -45,6 +45,10 @@
     <div>your answer: <span>[[response]]</span></div>
     <div>[[numCorrect]] correct answers out of [[responses.length]] questions.</div>
   </div>
+
+  <div v-if="state==='ended'">
+    Time is up. Thanks for your participation!
+  </div>
 </div>
 
 <script>
@@ -141,6 +145,9 @@ var app = new Vue({
       var min = Math.floor(secondsLeft / 60.0);
       var sec = Math.floor(secondsLeft - 60 * min);
       this.timeLeftStr = +min + ':' + sec;
+      if (secondsLeft < 0.0) {
+        this.state = 'ended';
+      }
     }
   }
 });
