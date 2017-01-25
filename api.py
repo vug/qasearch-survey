@@ -46,6 +46,17 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    req = request.get_json()
+    if 'email' not in req:
+        return 'missing key "email"', 400
+    email = req['email']
+    p = get_participant(email)
+    if p is None:
+        return '{} has not been registered', 401
+    return 'OK', 200
+
 
 @app.route('/questions/<int:qa_id>')
 def questions(qa_id):
