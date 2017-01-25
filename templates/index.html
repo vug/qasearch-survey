@@ -9,17 +9,17 @@
     <p>Some explanation here.</p>
     <p>Please input a valid email address so that we can inform you about the results of our research.</p>
     <form v-on:submit.prevent="startSurvey()">
-      <label>email: </label><input type="email" v-model="email"></input>
+      <label>email: </label><input type="email" v-model="email">
       <input type="submit" value="Start Survey">
     </form>
   </div>
 
   <div v-if="state==='survey'">
     <button v-on:click="submitAnswer()">Submit</button>
-    <div>question: <span>[[question]]<span></div>
-    <div>answer: <span>[[response]]<span></div>
+    <div>question: <span>[[question]]</span></div>
+    <div>answer: <span>[[response]]</span></div>
     <div v-if="debugMode" style='outline: 1px solid'>
-      <div>correct answer: <span>[[answer]]<span></div>
+      <div>correct answer: <span>[[answer]]</span></div>
       <div>is correct?: [[correct]]</div>
       <div>qaNo: [[qaNo]]</div>
       <div>[[responses]]</div>
@@ -36,9 +36,9 @@
 
   <div v-if="state==='submitted'">
     <button v-on:click="getNextQuestion()">Next Question</button>
-    <div>question: <span>[[question]]<span></div>
-    <div>correct answer: <span>[[answer]]<span></div>
-    <div>your answer: <span>[[response]]<span></div>
+    <div>question: <span>[[question]]</span></div>
+    <div>correct answer: <span>[[answer]]</span></div>
+    <div>your answer: <span>[[response]]</span></div>
     <div>[[numCorrect]] correct answers out of [[responses.length]] questions.</div>
   </div>
 </div>
