@@ -10,7 +10,8 @@
     <p>Please input a valid email address so that we can inform you about the results of our research.</p>
     <form v-on:submit.prevent="startSurvey()">
       <label>email: </label><input type="email" v-model="email">
-      <input type="submit" value="Start Survey">
+      <input type="submit" value="Start Survey"><br>
+      <div>[[loginError]]</div>
     </form>
   </div>
 
@@ -52,6 +53,7 @@ var app = new Vue({
     state: 'intro',
     email: document.location.search.includes('debug') ? 'debug@mode' : '',
     debugMode: document.location.search.includes('debug'),
+    loginError: '',
     snippets: [],
     question: '',
     answer: '',
