@@ -26,9 +26,11 @@
       <div>[[responses]]</div>
     </div>
     <div>snippets:</div>
-    <ul v-for="snippet in snippets">
-      <li><span v-for="word of snippet.split(' ')"><a href="#" v-on:click="setResponse(word)">[[word]]</a>&nbsp;</span></li>
-    </ul>
+    <div style="width: 80%; overflow-wrap: break-word;">
+      <ul v-for="snippet in snippets">
+        <li><span v-for="word of snippet.split(' ')"><a href="#" v-on:click="setResponse(word)">[[word]]</a>&nbsp;</span></li>
+      </ul>
+    </div>
   </div>
 
   <div v-if="state==='submitting'">
