@@ -61,7 +61,9 @@ var app = new Vue({
     answer: '',
     response: '',
     responses: [],
-    qaNo: null
+    qaNo: null,
+    timeLeftStr: '',
+    endTime: new Date().getTime() + (40 * 60 * 1000)
   },
   computed: {
     correct: function() {
