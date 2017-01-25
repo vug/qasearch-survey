@@ -8,6 +8,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///survey-results.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = flask_sqlalchemy.SQLAlchemy()
+ANSWER_KEYS = ['email', 'correct', 'question_no', 'answer']
 
 
 class Participant(db.Model):
@@ -44,7 +45,6 @@ class Answer(db.Model):
 def index():
     return render_template('index.html')
 
-KEYS = ['email', 'correct', 'question_no', 'answer']
 
 
 @app.route('/questions/<int:qa_id>')
@@ -60,7 +60,7 @@ def responses():
         return get_all_answers()
 
     req = request.get_json()
-    for key in KEYS:
+    for key in ANSWER_KEYS:
         if key not in req:
             return 'missing key "{}"'.format(key), 400
     email = req['email']
