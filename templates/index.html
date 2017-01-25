@@ -3,10 +3,10 @@
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
 </head>
-<h2>QA-search dataset human success rate survey</h2>
+<h2>QA-Search Jeopardy! Dataset Human Success Rate Survey</h2>
 <div id="app">
   <div v-if="state==='intro'">
-    <p>Please input a valid email address so that we can inform you about the results of our research.</p>
+    <p>Please input the email address you used when registering.</p>
     <form v-on:submit.prevent="checkRegistered()">
       <label>email: </label><input type="email" v-model="email">
       <input type="submit" value="Start Survey"><br>
