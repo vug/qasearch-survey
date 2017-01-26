@@ -8,6 +8,7 @@ import json
 DATASET_FILE = r'C:\Users\veliu\Downloads\test_no_candidates_unigram_question.txt'
 OUTPUT_FOLDER = r'C:\Users\veliu\Documents\GitRepos\qasearch-survey\static\survey-data'
 
+
 def main():
     print('Starting...')
     with open(DATASET_FILE, 'rt') as f:
@@ -24,6 +25,7 @@ def main():
         with open(output_path, 'wt') as out:
             json.dump(qa, out, indent=1)
     print('Chunks have been converted to JSON files.')
+
 
 def split_list_into_chunks(lines):
     """Group lines of unigram dataset into individual qa parts.
