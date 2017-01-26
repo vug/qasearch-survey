@@ -16,9 +16,9 @@
 
   <div v-if="state==='survey'">
     <div><label>timer:</label> [[timeLeftStr]] [[warning]]</div>
-    <button v-on:click="submitAnswer()">Submit</button>
-    <div>question: <span>[[question]]</span></div>
+        <div>question: <span>[[question]]</span></div>
     <div>answer: <span>[[response]]</span> <button v-on:click="clearResponse">Clear Answer</button></div>
+    <button v-on:click="submitAnswer()">Submit Answer</button>
     <div v-if="debugMode" style='outline: 1px solid'>
       <div>correct answer: <span>[[answer]]</span></div>
       <div>is correct?: [[correct]]</div>
