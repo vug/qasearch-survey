@@ -55,7 +55,8 @@ def login():
     p = get_participant(email)
     if p is None:
         return '{} has not been registered'.format(email), 401
-    return 'OK', 200
+    message = 'unigram' if p.id % 2 == 0 else 'ngram'
+    return message, 200
 
 
 @app.route('/questions/<int:qa_id>')
