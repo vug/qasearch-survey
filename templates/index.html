@@ -18,7 +18,7 @@
     <div><label>timer:</label> [[timeLeftStr]]</div>
     <button v-on:click="submitAnswer()">Submit</button>
     <div>question: <span>[[question]]</span></div>
-    <div>answer: <span>[[response]]</span></div>
+    <div>answer: <span>[[response]]</span> <button v-on:click="clearResponse">Clear Answer</button></div>
     <div v-if="debugMode" style='outline: 1px solid'>
       <div>correct answer: <span>[[answer]]</span></div>
       <div>is correct?: [[correct]]</div>
@@ -123,6 +123,9 @@ var app = new Vue({
       else {
         this.response += ' ' + word;
       }
+    },
+    clearResponse: function() {
+      this.response = '';
     },
     saveResponse: function() {
       this.responses.push(this.correct);
