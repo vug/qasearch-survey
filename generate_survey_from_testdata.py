@@ -5,13 +5,22 @@ JSON file for each question to be used by a web-based survey.
 import os
 import json
 
-DATASET_FILE = r'C:\Users\veliu\Downloads\test_no_candidates_unigram_question.txt'
-OUTPUT_FOLDER = r'C:\Users\veliu\Documents\GitRepos\qasearch-survey\static\survey-data'
+UNIGRAM_DATASET_FILE = r'C:\Users\veliu\Downloads\test_no_candidates_unigram_question.txt'
+NGRAM_DATASET_FILE = r'C:\Users\veliu\Downloads\test_no_candidates_ngram_question.txt'
+UNIGRAM_OUTPUT_FOLDER = r'C:\Users\veliu\Documents\GitRepos\qasearch-survey\static\unigram-questions'
+NGRAM_OUTPUT_FOLDER = r'C:\Users\veliu\Documents\GitRepos\qasearch-survey\static\ngram-questions'
 
 
 def main():
+    print('processing unigrams...')
+    generate_json_files_from_txt(UNIGRAM_DATASET_FILE, UNIGRAM_OUTPUT_FOLDER)
+    print('processing ngrams...')
+    generate_json_files_from_txt(NGRAM_DATASET_FILE, NGRAM_OUTPUT_FOLDER)
+
+
+def generate_json_files_from_txt(dataset_file, output_folder):
     print('Starting...')
-    with open(DATASET_FILE, 'rt') as f:
+    with open(dataset_file, 'rt') as f:
         lines = f.readlines()
     print('{} lines read from dataset file.'.format(len(lines)))
 
@@ -21,7 +30,7 @@ def main():
     for out_no, chunk in enumerate(chunks):
         output_file = '{n}.json'.format(n=out_no)
         qa = convert_chunk_to_qa(chunk)
-        output_path = os.path.join(OUTPUT_FOLDER, output_file)
+        output_path = os.path.join(output_folder, output_file)
         with open(output_path, 'wt') as out:
             json.dump(qa, out, indent=1)
     print('Chunks have been converted to JSON files.')
