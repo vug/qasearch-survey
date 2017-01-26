@@ -1,3 +1,4 @@
 survey-results.db
 ngram-questions
 unigram-questions
+*.pyc
