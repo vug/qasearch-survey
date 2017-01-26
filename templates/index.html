@@ -28,7 +28,7 @@
     <div>snippets:</div>
     <div style="width: 80%; overflow-wrap: break-word;">
       <ul v-for="snippet in snippets">
-        <li><span v-for="word of snippet.split(' ')"><a href="#" v-on:click="setResponse(word)">[[word]]</a>&nbsp;</span></li>
+        <li><span v-for="word of snippet.split(' ')"><a href="#" v-on:click="appendToResponse(word)">[[word]]</a>&nbsp;</span></li>
       </ul>
     </div>
   </div>
@@ -116,8 +116,13 @@ var app = new Vue({
         this.answer = qa.answer;
       });
     },
-    setResponse: function(word) {
-      this.response = word;
+    appendToResponse: function(word) {
+      if (this.response === '') {
+        this.response = word;
+      }
+      else {
+        this.response += ' ' + word;
+      }
     },
     saveResponse: function() {
       this.responses.push(this.correct);
