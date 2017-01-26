@@ -61,9 +61,14 @@ def login():
 @app.route('/questions/<int:qa_id>')
 def questions(qa_id):
     auth = request.headers.get('Authorization')
-    if auth is None or get_participant(auth) is None:
+    if auth is None:
         return 'Not authorized', 401
-    with app.open_resource('static/survey-data/{}.json'.format(qa_id), 'r') as f:
+    p = get_participant(auth)
+    if p is None:
+        return 'Not authorized', 401
+    # unigram questions to even IDs, ngram questions to odd IDs
+    questions_folder = 'unigram-questions' if p.id % 2 == 0 else 'ngram-questions'
+    with app.open_resource('static/{}/{}.json'.format(questions_folder, qa_id), 'r') as f:
         contents = json.load(f)
     return json.dumps(contents)
 
