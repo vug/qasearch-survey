@@ -9,9 +9,21 @@
     <p>Please input the email address you used when registering.</p>
     <form v-on:submit.prevent="checkRegistered()">
       <label>email: </label><input type="email" v-model="email">
-      <input type="submit" value="Start Survey"><br>
+      <input type="submit" value="Login"><br>
       <div>[[loginError]]</div>
     </form>
+  </div>
+
+  <div v-if="state==='instruction'" style="width: 75%">
+    <p>We would like to thank you for participating our study. Your participation will help us advance toward building a better interactive question-answering system in the future.</p>
+    <p>This study is focused on building a new dataset for context-dependent question-answering research. Our dataset was built using Jeopardy! questions. We Googled each Jeopardy! question to retrieve relevant document snippets that contain its answer (which can consist of multiple words.) Your task here is to answer a given Jeopardy! question by selecting one or more answer words from the retrieved snippets.</p>
+    <p>After this page, you will be presented with three sample questions so that you become familiar with the task. After these three sample questions, you will be asked to answer as many questions as possible in 40 minutes.</p>
+    <p>For each question, you should click on words in the snippets so as to form a single answer phrase. When you've selected all the words, please press "Submit Answer". If you've made a mistake, press "Clear Answer". Your answers will be recorded in order for us to compute the accuracy.</p>
+    <p>We would like to emphasize that your answers will be stored and kept confidentially from others. Only the aggregate statistics from multiple participants will be made public, and no person-identifying information will be released nor kept after the first publication of this study is made.</p>
+    <p>Again, we would like to thank you for your help in advancing science!</p>
+    <p>Best regards,</p>
+    <p>Matthew Thomas Dunn, Mike Higgins, Uğur Güney, Volkan Cirik, Levent Sagun and Kyunghyun Cho</p>
+    <button v-on:click="startSurvey();">Start Survey</button>
   </div>
 
   <div v-if="state==='survey'">
@@ -90,14 +102,13 @@ var app = new Vue({
         console.log(response.status, response.body);
         this.warning = (response.body.toString() === 'ngram') ?
             'Please answer in one or more words.' : 'Please answer in one word only.';
-        this.startSurvey();
+        this.state = 'instruction'
       }, (response) => {
         this.loginError = response.body;
       });
     },
     startSurvey: function() {
       this.state = 'survey';
-      setInterval(this.countDown, 1000);
       this.loadRandomQuestion();
     },
     submitAnswer: function() {
@@ -115,6 +126,9 @@ var app = new Vue({
       this.loadRandomQuestion();
       if (this.inExamples) {
         this.examplesLeft -= 1;
+        if (this.examplesLeft === 0) {
+          setInterval(this.countDown, 1000);
+        }
       }
     },
     loadRandomQuestion: function() {
