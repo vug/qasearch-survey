@@ -128,6 +128,7 @@ var app = new Vue({
         this.examplesLeft -= 1;
         if (this.examplesLeft === 0) {
           setInterval(this.countDown, 1000);
+          this.endTime = new Date().getTime() + (40 * 60 * 1000);
         }
       }
     },
