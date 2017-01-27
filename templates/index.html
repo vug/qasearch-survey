@@ -15,6 +15,7 @@
   </div>
 
   <div v-if="state==='survey'">
+    <div v-if="examplesLeft > 0" style="color: palevioletred;">Example Question (Not going to be evaluated)</div>
     <div><label>timer:</label> [[timeLeftStr]] [[warning]]</div>
         <div>question: <span>[[question]]</span></div>
     <div>answer: <span>[[response]]</span> <button v-on:click="clearResponse">Clear Answer</button></div>
@@ -42,7 +43,7 @@
     <div>question: <span>[[question]]</span></div>
     <div>correct answer: <span>[[answer]]</span></div>
     <div>your answer: <span>[[response]]</span></div>
-    <div>[[numCorrect]] correct answers out of [[responses.length]] questions.</div>
+    <div v-if="!inExamples">[[numCorrect]] correct answers out of [[responses.length]] questions.</div>
   </div>
 
   <div v-if="state==='ended'">
@@ -61,6 +62,7 @@ var app = new Vue({
     debugMode: document.location.search.includes('debug'),
     loginError: '',
     warning: '',
+    examplesLeft: 3,
     snippets: [],
     question: '',
     answer: '',
@@ -76,6 +78,9 @@ var app = new Vue({
     },
     numCorrect: function() {
       return this.responses.reduce((tot, curr) => tot + (curr ? 1 : 0), 0);
+    },
+    inExamples: function() {
+      return !(this.examplesLeft === 0);
     }
   },
   methods: {
@@ -97,12 +102,20 @@ var app = new Vue({
     },
     submitAnswer: function() {
       this.state = 'submitting';
-      this.saveResponse();
-      this.postAnswer();
+      if(!this.inExamples) {
+        this.saveResponse();
+        this.postAnswer();
+      }
+      else {
+        this.state = 'submitted';
+      }
     },
     getNextQuestion: function() {
       this.state = 'survey';
       this.loadRandomQuestion();
+      if (this.inExamples) {
+        this.examplesLeft -= 1;
+      }
     },
     loadRandomQuestion: function() {
       this.qaNo = Math.floor(Math.random() * 13389);
