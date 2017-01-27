@@ -28,7 +28,7 @@
     <div>snippets:</div>
     <div style="width: 80%; overflow-wrap: break-word;">
       <ul v-for="snippet in snippets">
-        <li><span v-for="word of snippet.split(' ')"><a href="#" v-on:click="appendToResponse(word)">[[word]]</a>&nbsp;</span></li>
+        <li style="cursor: default;"><span v-for="word of snippet.split(' ')"><span style="cursor: pointer;" v-on:click="appendToResponse(word)">[[word]]</span>&nbsp;</span></li>
       </ul>
     </div>
   </div>
