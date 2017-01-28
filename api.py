@@ -102,6 +102,28 @@ def responses():
     return 'saved {}th answer'.format(Answer.query.count())
 
 
+@app.route('/participants', methods=['GET', 'POST', 'DELETE'])
+def participants():
+    if request.method == 'GET':
+        all_participants = Participant.query.all()
+        return jsonify([str(p) for p in all_participants])
+
+    elif request.method == 'POST':
+        req = request.get_json()
+        email = req['email']
+        p = Participant(email)
+        db.session.add(p)
+        db.session.commit()
+        return 'saved {}th participant'.format(Participant.query.count())
+
+    elif request.method == 'DELETE':
+        req = request.get_json()
+        email = req['email']
+        p = Participant.query.filter_by(email=email).first()
+        db.session.delete(p)
+        db.session.commit()
+
+
 def get_all_answers():
     answers = Answer.query.all()
     answer_dicts = [answer.to_dict() for answer in answers]
