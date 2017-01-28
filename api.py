@@ -20,6 +20,9 @@ class Participant(db.Model):
     def __init__(self, email):
         self.email = email
 
+    def __str__(self):
+        return '<Participant id={}, email={}>'.format(self.id, self.email)
+
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
