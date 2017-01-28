@@ -93,11 +93,10 @@ def responses():
     correct = req['correct']
     question_no = req['question_no']
     answer_str = req['answer']
-    print(email, correct, question_no, answer_str)
-    # print(type(email), type(correct), type(question_no), type(answer_str))
-    answer = Answer(email, correct, question_no, answer_str)
     timestamp_str = req['timestamp']  # '2017-01-28T17:08:00.485Z'
     timestamp = datetime.strptime(timestamp_str.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+    # print(type(email), type(correct), type(question_no), type(answer_str), type(timestamp))
+    answer = Answer(email, correct, question_no, answer_str, timestamp)
     db.session.add(answer)
     db.session.commit()
     return 'saved {}th answer'.format(Answer.query.count())
