@@ -26,19 +26,22 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean)
     question_no = db.Column(db.Integer)
     answer = db.Column(db.Unicode)
+    timestamp = db.Column(db.DateTime)
 
-    def __init__(self, email, correct, question_no, answer):
+    def __init__(self, email, correct, question_no, answer, timestamp):
         self.email = email
         self.correct = correct
         self.question_no = question_no
         self.answer = answer
+        self.timestamp = timestamp
 
     def to_dict(self):
         return {
             'email': self.email,
             'correct': self.correct,
             'question_no': self.question_no,
-            'answer': self.answer
+            'answer': self.answer,
+            'timestamp': self.timestamp
         }
 
 
