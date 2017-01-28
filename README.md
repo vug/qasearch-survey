@@ -26,10 +26,13 @@ First `import imp` then at each change `imp.reload(api)`
 Curl can be used to test an API from command line. First run the server.
 
 Windows notation:
+
 `curl -H "Content-Type: application/json" -X POST -d "{\"foo\":\"xyz\"}" http://localhost:7000/login`
 responds `missing key "email"` with status code 400
+
 `curl -H "Content-Type: application/json" -X POST -d "{\"email\":\"xyz\"}" http://localhost:7000/login`
 responds `xyz has not been registered` with status code 401
+
 `curl -H "Content-Type: application/json" -X POST -d "{\"email\":\"student1@nyu.edu\"}" http://localhost:7000/login`
 responds `OK` with status code 200
 
