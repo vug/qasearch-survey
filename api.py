@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 import logging
 
-from flask import Flask, request, render_template, abort, jsonify
+from flask import Flask, request, render_template, jsonify
 import flask_sqlalchemy
 
 app = Flask(__name__)
