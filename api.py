@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+import logging
 
 from flask import Flask, request, render_template, abort, jsonify
 import flask_sqlalchemy
@@ -84,6 +85,7 @@ def responses():
         return get_all_answers()
 
     req = request.get_json()
+    logging.info(req)
     for key in ANSWER_KEYS:
         if key not in req:
             return 'missing key "{}"'.format(key), 400
@@ -134,6 +136,7 @@ def test_data_command():
 
 
 def main():
+    logging.basicConfig(filename='requests.log', level=logging.INFO)
     db.init_app(app)
     app.run(debug=True, port=7000)
 
