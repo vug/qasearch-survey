@@ -86,6 +86,9 @@ def questions(qa_id):
 @app.route('/answers', methods=['GET', 'POST'])
 def responses():
     if request.method == 'GET':
+        auth_token = request.args.get('token')
+        if auth_token is None or auth_token != app.config['AUTH_TOKEN']:
+            return 'Not authorized', 401
         return get_all_answers()
 
     req = request.get_json()
@@ -109,6 +112,9 @@ def responses():
 @app.route('/participants', methods=['GET', 'POST', 'DELETE'])
 def participants():
     if request.method == 'GET':
+        auth_token = request.args.get('token')
+        if auth_token is None or auth_token != app.config['AUTH_TOKEN']:
+            return 'Not authorized', 401
         all_participants = Participant.query.all()
         return jsonify([str(p) for p in all_participants])
 
