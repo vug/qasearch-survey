@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from flask import Flask, request, render_template, abort, jsonify
 import flask_sqlalchemy
@@ -90,6 +91,8 @@ def responses():
     print(email, correct, question_no, answer_str)
     # print(type(email), type(correct), type(question_no), type(answer_str))
     answer = Answer(email, correct, question_no, answer_str)
+    timestamp_str = req['timestamp']  # '2017-01-28T17:08:00.485Z'
+    timestamp = datetime.strptime(timestamp_str.split('.')[0], '%Y-%m-%dT%H:%M:%S')
     db.session.add(answer)
     db.session.commit()
     return 'saved {}th answer'.format(Answer.query.count())
