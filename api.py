@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///survey-results.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_envvar('QASEARCH_SURVEY_SETTINGS')
 db = flask_sqlalchemy.SQLAlchemy()
 ANSWER_KEYS = ['email', 'correct', 'question_no', 'answer']
 
