@@ -135,7 +135,8 @@ var app = new Vue({
       }
     },
     loadRandomQuestion: function() {
-      this.qaNo = Math.floor(Math.random() * 13389);
+      var nQuestions = this.questionType === 'ngram' ? 26748 : 13233;
+      this.qaNo = Math.floor(Math.random() * nQuestions);
       q = this.pullQuestion(this.qaNo);
       this.response = '';
     },
