@@ -80,6 +80,7 @@ var app = new Vue({
     answer: '',
     response: '',
     responses: [],
+    questionType: '',
     qaNo: null,
     timeLeftStr: '',
     endTime: new Date().getTime() + (40 * 60 * 1000)
@@ -100,7 +101,8 @@ var app = new Vue({
       console.log('are your registered?');
       this.$http.post('/login', {email: this.email}).then((response) => {
         console.log(response.status, response.body);
-        this.warning = (response.body.toString() === 'ngram') ?
+        this.questionType = response.body.toString();
+        this.warning = (this.questionType === 'ngram') ?
             'Please answer in one or more words.' : 'Please answer in one word only.';
         this.state = 'instruction'
       }, (response) => {
