@@ -166,7 +166,8 @@ var app = new Vue({
         email: this.email,
         correct: this.correct,
         question_no: this.qaNo,
-        answer: this.response
+        answer: this.response,
+        timestamp: new Date()
       };
       console.log('sending: ', data);
       this.$http.post('/answers', data).then((response) => {
